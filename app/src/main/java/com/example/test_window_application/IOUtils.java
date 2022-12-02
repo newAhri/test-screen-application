@@ -16,14 +16,14 @@ public class IOUtils {
         HttpURLConnection client = null;
 
         try {
-            URL url = new URL(urlLink);
-            client = (HttpURLConnection) url.openConnection();
+            URL url = new URL(urlLink);// повторяется 1
+            client = (HttpURLConnection) url.openConnection(); // повторяется 1
             client.setRequestMethod("POST");
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        client.setRequestProperty("User-Agent", "Mozilla/5.0");
+        client.setRequestProperty("User-Agent", "Mozilla/5.0"); // повторяется 1
         client.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         client.setDoOutput(true);
 
@@ -49,15 +49,15 @@ public class IOUtils {
     }
 
     public static String sendGetRequest(String urlLink) {
-        HttpURLConnection client = null;
+        HttpURLConnection client = null; // повторяется 2
 
         try {
-            URL url = new URL(urlLink);
-            client = (HttpURLConnection) url.openConnection();
+            URL url = new URL(urlLink); // повторяется 2
+            client = (HttpURLConnection) url.openConnection(); // повторяется 2
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        client.setRequestProperty("User-Agent", "Mozilla/5.0");
+        client.setRequestProperty("User-Agent", "Mozilla/5.0");// повторяется 2
 
         String response = null;
 
@@ -83,7 +83,7 @@ public class IOUtils {
 
     private static void writeStream(OutputStream out, String user, String pass) {
         String output = "{\"username\": " + "\"" + user + "\","
-                + "\"password\": " + pass + "}";
+                + "\"password\": " + pass + "}"; // user/pass в класс где myclass.username / myclass.password и этот класс парсим в JSON. Строкой устанешь описываеть и нет консистентности
         try {
             out.write(output.getBytes());
             out.flush();

@@ -20,7 +20,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
 
-        String response = IOUtils.sendPostRequest("https://engine.free.beeceptor.com/api/login",
+        String response = IOUtils.sendPostRequest("https://engine.free.beeceptor.com/api/login", // https://engine.free.beeceptor.com/api/ в отдельный класс с константами или в IOUtils
                 username,
                 password);
         return response;

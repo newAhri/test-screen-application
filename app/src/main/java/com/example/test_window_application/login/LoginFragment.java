@@ -28,7 +28,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        login = view.findViewById(R.id.button1);
+        login = view.findViewById(R.id.button1); // что за button 1 ?
         username = view.findViewById(R.id.username);
         password = view.findViewById(R.id.password);
 
@@ -49,7 +49,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
     @Override
     public void onPostExecute(String aString) {
         String message = "failure";
-        if (aString.equals("{\"success\": true}")) {
+        if (aString.equals("{\"success\": true}")) { // тоже не всю строку проверять, а ключ значение (парсим строку в обьект/map см Utlis.java)
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()

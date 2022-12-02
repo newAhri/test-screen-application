@@ -43,7 +43,7 @@ public class Utils {
 
     public static ArrayList<String> getListOfDetails(String toString) {
         ArrayList<String> details = new ArrayList<>();
-        int[] charAt = new int[]{9, 12, 10, 10, 13};
+        int[] charAt = new int[]{9, 12, 10, 10, 13}; // так не надо делать, используй Map или другую альтернативу dictionary, лучше парсить в обект класса
         String[] rawDetails = toString.split("\t");
         for (int i = 1; i < rawDetails.length; i++) {
             details.add(rawDetails[i].substring(charAt[i-1], rawDetails[i].length() - 2));

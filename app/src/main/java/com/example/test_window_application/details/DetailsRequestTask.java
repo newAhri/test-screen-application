@@ -19,7 +19,7 @@ class DetailsRequestTask extends AsyncTask<Void, Void, ArrayList<String>> {
     @Override
     protected ArrayList<String> doInBackground(Void... voids) {
 
-        String response = IOUtils.sendGetRequest("https://engine.free.beeceptor.com/api/getSportDetails?sportId=" + (id+1));
+        String response = IOUtils.sendGetRequest("https://engine.free.beeceptor.com/api/getSportDetails?sportId=" + (id+1)); https://engine.free.beeceptor.com/api/ в отдельный класс с константами или в IOUtils
         return Utils.getListOfDetails(response);
     }
 

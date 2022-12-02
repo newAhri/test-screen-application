@@ -36,10 +36,10 @@ public class DetailsFragment extends Fragment implements RequestAsyncTaskCallbac
         phone = getView().findViewById(R.id.phone);
         price = getView().findViewById(R.id.price);
 
-        name.setText(details.get(0));
-        address.setText(details.get(1));
-        phone.setText(details.get(2));
-        String priceText = details.get(3) + " " + details.get(4);
+        name.setText(details.get(0)); // что будет если имя будет не 0 позицией ? из MAP по ключу тяни значение (см комент в Utils.java), а еще лучше парсить в обьект
+        address.setText(details.get(1)); // ---"---
+        phone.setText(details.get(2));// ---"---
+        String priceText = details.get(3) + " " + details.get(4);// ---"---
         price.setText(priceText);
     }
 }
