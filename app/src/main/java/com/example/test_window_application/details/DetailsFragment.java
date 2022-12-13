@@ -25,8 +25,7 @@ public class DetailsFragment extends Fragment implements RequestAsyncTaskCallbac
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OnBackPressedCallback callback;
-        getActivity().getOnBackPressedDispatcher().addCallback(this, callback = new OnBackPressedCallback(true){
+        getActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true){
             @Override
             public void handleOnBackPressed() {
                 getActivity()
