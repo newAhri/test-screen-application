@@ -10,8 +10,8 @@ import java.net.URL;
 
 public class HTTPRequest {
     boolean methodIsPost;
-    String username,
-            password,
+    String username,  // а если еще поля и методы добавятся, мы все хранить будем ?
+            password, // а если еще поля и методы добавятся, мы все хранить будем ?
             urlLink,
             urlParameter = "";
     HttpURLConnection client = null;
@@ -28,10 +28,14 @@ public class HTTPRequest {
     }
 
     public void setUrlParameter (int urlParameter){
-        this.urlParameter = String.valueOf(urlParameter);
+        this.urlParameter = String.valueOf(urlParameter); // а если будет много парметров + разные методы ? подумай как можно сделать более generic
     }
 
-    public String sendRequest() {
+    public String sendRequest() {  // сократил повторения - хорошо. теперь подумай как сюда передавать только те параметры, которые относятся к конкретному API запросу.
+                                   // придумать как  передавать некие унифициоранные параметры. что бы функция принимала нечто, что может быть и loginRequest и detailsRequest и тд.
+                                   // т.е. единый параметр. проверка на (get/post) может остаться
+                                   // хорошая идея в Utils.convertMapToJson()
+
 
         try {
             URL url = new URL(urlLink.concat(urlParameter));
@@ -50,7 +54,7 @@ public class HTTPRequest {
 
             try (OutputStream out = new BufferedOutputStream(client.getOutputStream())) {
                 IOUtils.writeStream(out,
-                        username,
+                        username, // а если я еще один метод попрошу сделать POST ? мы везде будем передоввать все ?
                         password);
                 out.flush();
             } catch (IOException e) {

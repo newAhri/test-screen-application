@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Utils {
-    public static String getImageName(String sportName) {
+    public static String getImageName(String sportName) { // В отдельный класс SportsResponse
         String result = null;
         switch (sportName) {
             case "American Football":
@@ -39,7 +39,7 @@ public class Utils {
         return result;
     }
 
-    public static ArrayList<String> getListOfSports(String stringToJsonArray) {
+    public static ArrayList<String> getListOfSports(String stringToJsonArray) { // В отдельный класс SportsResponse
         JSONArray jsonArray;
         JSONObject jsonObject;
         ArrayList<String> sports = new ArrayList<>();
@@ -55,7 +55,7 @@ public class Utils {
         return sports;
     }
 
-    public static Map<String, String> getListOfDetails(String stringToJsonObject) {
+    public static Map<String, String> getListOfDetails(String stringToJsonObject) { // парсим сразу в обьект класса DetailsResponse см. DetailsFragment и эту функицю туда же
 
         JSONParser parser = new JSONParser();
         JSONObject jsonObject;
@@ -85,7 +85,7 @@ public class Utils {
         return details;
     }
 
-    public static boolean getLoginSuccess (String stringToJsonObject){
+    public static boolean getLoginSuccess (String stringToJsonObject){ // в отдельный класс LoginResponse
         JSONParser parser = new JSONParser();
         JSONObject jsonObject;
         String success = "";
@@ -103,7 +103,7 @@ public class Utils {
     }
 
 
-    public static String convertMapToJson(String username, String password) {
+    public static String convertMapToJson(String username, String password) { // в отдельный класс LoginRequest
         Map<String, String> elements = new HashMap();
         elements.put("username", username);
         elements.put("password", password);

@@ -40,24 +40,24 @@ public class DetailsFragment extends Fragment implements RequestAsyncTaskCallbac
     }
 
     @Override
-    public void onPostExecute(Map<String, String> details) {
+    public void onPostExecute(Map<String, String> details) { // сюда пердаем обьект класса DetailsResponse
         name = getView().findViewById(R.id.name);
         address = getView().findViewById(R.id.address);
         phone = getView().findViewById(R.id.phone);
         price = getView().findViewById(R.id.price);
 
         if (details.containsKey("name")){
-            name.setText(details.get("name"));
+            name.setText(details.get("name"));   // должно быть details.name -> this.name = details.get("name") в отдельном классе DetailsResponse
         }
         if (details.containsKey("address")){
-            address.setText(details.get("address"));
+            address.setText(details.get("address")); // должно быть details.address -> this.address = details.get("address") в отдельном классе DetailsResponse
         }
         if (details.containsKey("phone")){
-            phone.setText(details.get("phone"));
+            phone.setText(details.get("phone")); // должно быть details.phone -> this.phone = details.get("phone") в отдельном классе DetailsResponse
         }
         if (details.containsKey("price") && details.containsKey("currency")){
-            String priceText = details.get("price").concat(" ").concat(details.get("currency"));
-            price.setText(priceText);
+            String priceText = details.get("price").concat(" ").concat(details.get("currency")); // строку можно тоже формировать в классе DetailsResponse
+            price.setText(priceText); // тут будет ..setText(details.getPriceString())
         }
     }
 }

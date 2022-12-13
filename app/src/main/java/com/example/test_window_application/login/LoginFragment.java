@@ -38,8 +38,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
 
     @Override
     public void onClick(View view) {
-        String user = username.getText().toString();
-        String pass = password.getText().toString();
+        String user = username.getText().toString(); // формируем обьект а не отдельные поля
+        String pass = password.getText().toString(); // формируем обьект а не отдельные поля
         loginTask = new LoginTask(this,
                 user,
                 pass);
