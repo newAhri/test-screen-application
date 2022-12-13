@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test_window_application.R;
-import com.example.test_window_application.Utils;
+import com.example.test_window_application.utils.Utils;
 import com.example.test_window_application.details.DetailsFragment;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class MenuFragment extends Fragment implements RequestAsyncTaskCallback {
     RecyclerView recyclerView;
     ItemAdapter itemAdapter;
     private Context context;
+    ArrayList<String> sportsToSave;
 
     public MenuFragment(){
         super(R.layout.menu_screen);
@@ -48,7 +49,34 @@ public class MenuFragment extends Fragment implements RequestAsyncTaskCallback {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("sports", sportsToSave);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState!=null) {
+            sportsToSave = savedInstanceState.getStringArrayList("sports");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sportsToSave != null) {
+            initRecycleView();
+        }
+    }
+
+    @Override
     public void onPostExecute(ArrayList<String> sports) {
+        sportsToSave = sports;
+        initRecycleView();
+    }
+
+    public void initRecycleView(){
         recyclerView = getView().findViewById(R.id.recycler_view);
         recyclerView.addItemDecoration(new DividerItemDecoration(
                 context,
@@ -56,7 +84,7 @@ public class MenuFragment extends Fragment implements RequestAsyncTaskCallback {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        itemAdapter = new ItemAdapter(sports, context);
+        itemAdapter = new ItemAdapter(sportsToSave, context);
         recyclerView.setAdapter(itemAdapter);
     }
 

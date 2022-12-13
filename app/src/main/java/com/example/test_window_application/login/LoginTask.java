@@ -2,7 +2,9 @@ package com.example.test_window_application.login;
 
 import android.os.AsyncTask;
 
-import com.example.test_window_application.IOUtils;
+import com.example.test_window_application.utils.HTTPMethods;
+import com.example.test_window_application.utils.HTTPRequest;
+import com.example.test_window_application.utils.UrlLinks;
 
 public class LoginTask extends AsyncTask<Void, Void, String> {
     public LoginAsyncTaskCallback callback;
@@ -20,10 +22,9 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
 
-        String response = IOUtils.sendPostRequest("https://engine.free.beeceptor.com/api/login", // https://engine.free.beeceptor.com/api/ в отдельный класс с константами или в IOUtils
-                username,
-                password);
-        return response;
+        HTTPRequest request = new HTTPRequest(UrlLinks.LOGIN, HTTPMethods.POST);
+        request.setCredentials(username, password);
+        return request.sendRequest();
     }
 
     @Override

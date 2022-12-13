@@ -2,8 +2,10 @@ package com.example.test_window_application.menu;
 
 import android.os.AsyncTask;
 
-import com.example.test_window_application.IOUtils;
-import com.example.test_window_application.Utils;
+import com.example.test_window_application.utils.HTTPMethods;
+import com.example.test_window_application.utils.HTTPRequest;
+import com.example.test_window_application.utils.UrlLinks;
+import com.example.test_window_application.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,8 @@ class SportListRequestTask extends AsyncTask<Void, Void, ArrayList<String>> {
     @Override
     protected ArrayList<String> doInBackground(Void... voids) {
 
-        String response = IOUtils.sendGetRequest("https://engine.free.beeceptor.com/api/getServices"); https://engine.free.beeceptor.com/api/ в отдельный класс с константами или в IOUtils
+        HTTPRequest request = new HTTPRequest(UrlLinks.LIST_SPORTS, HTTPMethods.GET);
+        String response = request.sendRequest();
         return Utils.getListOfSports(response);
     }
 
@@ -28,5 +31,4 @@ class SportListRequestTask extends AsyncTask<Void, Void, ArrayList<String>> {
         }
         super.onPostExecute(sports);
     }
-
 }

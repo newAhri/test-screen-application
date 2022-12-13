@@ -3,12 +3,13 @@ package com.example.test_window_application.details;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.test_window_application.R;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 public class DetailsFragment extends Fragment implements RequestAsyncTaskCallback {
     DetailsRequestTask detailsTask;
@@ -24,28 +25,46 @@ public class DetailsFragment extends Fragment implements RequestAsyncTaskCallbac
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback;
+        getActivity().getOnBackPressedDispatcher().addCallback(this, callback = new OnBackPressedCallback(true){
+            @Override
+            public void handleOnBackPressed() {
+                getActivity()
+                        .getSupportFragmentManager()
+                        .popBackStack();
+            }
+        });
+
         int id = requireArguments().getInt("position");
         detailsTask = new DetailsRequestTask((RequestAsyncTaskCallback) this, id);
         detailsTask.execute();
     }
 
     @Override
-    public void onPostExecute(ArrayList<String> details) {
+    public void onPostExecute(Map<String, String> details) {
         name = getView().findViewById(R.id.name);
         address = getView().findViewById(R.id.address);
         phone = getView().findViewById(R.id.phone);
         price = getView().findViewById(R.id.price);
 
-        name.setText(details.get(0)); // что будет если имя будет не 0 позицией ? из MAP по ключу тяни значение (см комент в Utils.java), а еще лучше парсить в обьект
-        address.setText(details.get(1)); // ---"---
-        phone.setText(details.get(2));// ---"---
-        String priceText = details.get(3) + " " + details.get(4);// ---"---
-        price.setText(priceText);
+        if (details.containsKey("name")){
+            name.setText(details.get("name"));
+        }
+        if (details.containsKey("address")){
+            address.setText(details.get("address"));
+        }
+        if (details.containsKey("phone")){
+            phone.setText(details.get("phone"));
+        }
+        if (details.containsKey("price") && details.containsKey("currency")){
+            String priceText = details.get("price").concat(" ").concat(details.get("currency"));
+            price.setText(priceText);
+        }
     }
 }
 
 interface RequestAsyncTaskCallback {
-    void onPostExecute(ArrayList<String> list);
+    void onPostExecute(Map<String, String> list);
 }
 
 

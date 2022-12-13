@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.test_window_application.R;
 import com.example.test_window_application.menu.MenuFragment;
+import com.example.test_window_application.utils.Utils;
 
 public class LoginFragment extends Fragment implements View.OnClickListener, LoginAsyncTaskCallback {
     Button login;
@@ -28,7 +29,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        login = view.findViewById(R.id.button1); // что за button 1 ?
+        login = view.findViewById(R.id.login_button);
         username = view.findViewById(R.id.username);
         password = view.findViewById(R.id.password);
 
@@ -49,7 +50,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
     @Override
     public void onPostExecute(String aString) {
         String message = "failure";
-        if (aString.equals("{\"success\": true}")) { // тоже не всю строку проверять, а ключ значение (парсим строку в обьект/map см Utlis.java)
+        boolean successIsTrue = Utils.getLoginSuccess(aString);
+        if (successIsTrue) {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()

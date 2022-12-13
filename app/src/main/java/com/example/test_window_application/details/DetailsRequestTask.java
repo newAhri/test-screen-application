@@ -2,12 +2,14 @@ package com.example.test_window_application.details;
 
 import android.os.AsyncTask;
 
-import com.example.test_window_application.IOUtils;
-import com.example.test_window_application.Utils;
+import com.example.test_window_application.utils.HTTPMethods;
+import com.example.test_window_application.utils.HTTPRequest;
+import com.example.test_window_application.utils.UrlLinks;
+import com.example.test_window_application.utils.Utils;
 
-import java.util.ArrayList;
+import java.util.Map;
 
-class DetailsRequestTask extends AsyncTask<Void, Void, ArrayList<String>> {
+class DetailsRequestTask extends AsyncTask<Void, Void, Map<String, String>> {
     public RequestAsyncTaskCallback callback;
     private int id;
 
@@ -17,15 +19,17 @@ class DetailsRequestTask extends AsyncTask<Void, Void, ArrayList<String>> {
     }
 
     @Override
-    protected ArrayList<String> doInBackground(Void... voids) {
+    protected Map<String, String> doInBackground(Void... voids) {
 
-        String response = IOUtils.sendGetRequest("https://engine.free.beeceptor.com/api/getSportDetails?sportId=" + (id+1)); https://engine.free.beeceptor.com/api/ в отдельный класс с константами или в IOUtils
+        HTTPRequest request = new HTTPRequest(UrlLinks.SPORT_DETAILS, HTTPMethods.GET);
+        request.setUrlParameter(id+1);
+        String response = request.sendRequest();
         return Utils.getListOfDetails(response);
     }
 
 
     @Override
-    public void onPostExecute(ArrayList<String> details) {
+    public void onPostExecute(Map<String, String> details) {
         if (callback != null) {
             callback.onPostExecute(details);
         }
