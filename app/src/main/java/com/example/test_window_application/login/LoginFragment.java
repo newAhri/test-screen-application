@@ -38,7 +38,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
     @Override
     public void onClick(View view) {
         LoginHeaders loginHeaders = new LoginHeaders(username.getText().toString(),
-                password.getText().toString());
+                password.getText().toString());         // С новой логин ссылкой отправляю headers вместо json тела
 
         loginTask = new LoginRequestTask(this,
                 loginHeaders);

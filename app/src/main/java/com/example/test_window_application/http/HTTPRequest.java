@@ -27,10 +27,10 @@ public class HTTPRequest {
         this.loginHeaders = builder.loginHeaders;
     }
 
-    public String sendRequest() {
-        String response = null;
-        try {
-            URL url = new URL(urlLink.concat(urlParameter));
+    public String sendRequest() {                           // Не особо понимаю каким образом провести унифицирование - может
+        String response = null;                             // не понял что требуется. Как я понял, нужно сделать метод более generic,
+        try {                                               // чтобы собирать его как конструктор из конфигураций исходя из того,
+            URL url = new URL(urlLink.concat(urlParameter));// какой у нас http метод. Прикинул, возможно, паттерн Стратегия здесь сработал бы?
             client = (HttpURLConnection) url.openConnection();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -70,7 +70,7 @@ public class HTTPRequest {
     }
 
 
-    public static class HTTPRequestBuilder {
+    public static class HTTPRequestBuilder { // Подумал, фича билдера были бы кстати при множестве видов конфигурации http запроса.
         private HTTPMethods method;
         private String requestContent,
                 urlLink,
@@ -83,8 +83,8 @@ public class HTTPRequest {
             this.method = method;
         }
 
-        public HTTPRequestBuilder setRequestContent(String requestContent) {
-            this.requestContent = requestContent;
+        public HTTPRequestBuilder setRequestContent(String requestContent) {    // Метод для определения тела http в формате json. Не используется, оставил
+            this.requestContent = requestContent;                               // на случай, если надо будет отправлять запросы с телом json.
             return this;
         }
 
@@ -93,8 +93,8 @@ public class HTTPRequest {
             return this;
         }
 
-        public HTTPRequestBuilder setNextUrlParameter(String urlParameter) {
-            this.urlParameter = this.urlParameter.concat("&").concat(urlParameter);
+        public HTTPRequestBuilder setNextUrlParameter(String urlParameter) {        // Возможность добавлять >1 параметров в url ссылке. Можно преобразовать в один метод -
+            this.urlParameter = this.urlParameter.concat("&").concat(urlParameter); // кол-во кода не уменьшится.
             return this;
         }
 

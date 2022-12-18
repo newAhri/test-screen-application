@@ -1,9 +1,9 @@
 package com.example.test_window_application.utils;
 
 public class Utils {
-    public static String getImageName(String sportName) {
-        String result = null;
-        switch (sportName) {
+    public static String getImageName(String sportName) {       // Решил оставить "mapper" здесь - нецелезообразно что-ли, если он будет
+        String result = null;                                   // в SportsResponse и потом протаскивать объект через методы фрагмента, чтобы только
+        switch (sportName) {                                    // вызвать один этот метод.
             case "American Football":
                 result = "ic_baseline_sports_football_24";
                 break;
