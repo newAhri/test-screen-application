@@ -2,14 +2,12 @@ package com.example.test_window_application.details;
 
 import android.os.AsyncTask;
 
-import com.example.test_window_application.utils.HTTPMethods;
-import com.example.test_window_application.utils.HTTPRequest;
-import com.example.test_window_application.utils.UrlLinks;
-import com.example.test_window_application.utils.Utils;
+import com.example.test_window_application.http.HTTPMethods;
+import com.example.test_window_application.http.HTTPRequest;
+import com.example.test_window_application.http.UrlLinks;
+import com.example.test_window_application.http.UrlParams;
 
-import java.util.Map;
-
-class DetailsRequestTask extends AsyncTask<Void, Void, Map<String, String>> {
+class DetailsRequestTask extends AsyncTask<Void, Void, DetailsResponse> {
     public RequestAsyncTaskCallback callback;
     private int id;
 
@@ -19,20 +17,19 @@ class DetailsRequestTask extends AsyncTask<Void, Void, Map<String, String>> {
     }
 
     @Override
-    protected Map<String, String> doInBackground(Void... voids) {
-
-        HTTPRequest request = new HTTPRequest(UrlLinks.SPORT_DETAILS, HTTPMethods.GET);
-        request.setUrlParameter(id+1);
+    protected DetailsResponse doInBackground(Void... voids) {
+        HTTPRequest request = new HTTPRequest.HTTPRequestBuilder(UrlLinks.SPORT_DETAILS, HTTPMethods.GET)
+                .setUrlParameter(UrlParams.SPORT_ID + (id + 1))
+                .build();
         String response = request.sendRequest();
-        return Utils.getListOfDetails(response);
+        return new DetailsResponse(response);
     }
 
-
     @Override
-    public void onPostExecute(Map<String, String> details) {
+    public void onPostExecute(DetailsResponse detailsResponse) {
         if (callback != null) {
-            callback.onPostExecute(details);
+            callback.onPostExecute(detailsResponse);
         }
-        super.onPostExecute(details);
+        super.onPostExecute(detailsResponse);
     }
 }

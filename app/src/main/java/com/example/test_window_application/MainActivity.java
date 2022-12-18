@@ -1,9 +1,9 @@
 
 package com.example.test_window_application;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test_window_application.login.LoginFragment;
 

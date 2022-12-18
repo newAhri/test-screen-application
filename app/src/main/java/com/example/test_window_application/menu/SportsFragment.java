@@ -18,20 +18,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test_window_application.R;
-import com.example.test_window_application.utils.Utils;
 import com.example.test_window_application.details.DetailsFragment;
+import com.example.test_window_application.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuFragment extends Fragment implements RequestAsyncTaskCallback {
-    SportListRequestTask requestTask;
+public class SportsFragment extends Fragment implements RequestAsyncTaskCallback {
+    SportsRequestTask requestTask;
     RecyclerView recyclerView;
     ItemAdapter itemAdapter;
     private Context context;
     ArrayList<String> sportsToSave;
 
-    public MenuFragment(){
+    public SportsFragment(){
         super(R.layout.menu_screen);
     }
 
@@ -44,7 +44,7 @@ public class MenuFragment extends Fragment implements RequestAsyncTaskCallback {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestTask = new SportListRequestTask((RequestAsyncTaskCallback) this);
+        requestTask = new SportsRequestTask((RequestAsyncTaskCallback) this);
         requestTask.execute();
     }
 
@@ -71,8 +71,8 @@ public class MenuFragment extends Fragment implements RequestAsyncTaskCallback {
     }
 
     @Override
-    public void onPostExecute(ArrayList<String> sports) {
-        sportsToSave = sports;
+    public void onPostExecute(SportsResponse sports) {
+        sportsToSave = sports.getSports();
         initRecycleView();
     }
 
@@ -161,5 +161,5 @@ public class MenuFragment extends Fragment implements RequestAsyncTaskCallback {
     }
 }
 interface RequestAsyncTaskCallback {
-    void onPostExecute(ArrayList<String> list);
+    void onPostExecute(SportsResponse sports);
 }

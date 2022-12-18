@@ -11,14 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.test_window_application.R;
-import com.example.test_window_application.menu.MenuFragment;
-import com.example.test_window_application.utils.Utils;
+import com.example.test_window_application.menu.SportsFragment;
 
 public class LoginFragment extends Fragment implements View.OnClickListener, LoginAsyncTaskCallback {
     Button login;
     EditText username;
     EditText password;
-    LoginTask loginTask;
+    LoginRequestTask loginTask;
 
     public LoginFragment() {
         super(R.layout.login_screen);
@@ -38,27 +37,26 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
 
     @Override
     public void onClick(View view) {
-        String user = username.getText().toString(); // формируем обьект а не отдельные поля
-        String pass = password.getText().toString(); // формируем обьект а не отдельные поля
-        loginTask = new LoginTask(this,
-                user,
-                pass);
+        LoginHeaders loginHeaders = new LoginHeaders(username.getText().toString(),
+                password.getText().toString());
+
+        loginTask = new LoginRequestTask(this,
+                loginHeaders);
         loginTask.execute();
     }
 
 
     @Override
-    public void onPostExecute(String aString) {
-        String message = "failure";
-        boolean successIsTrue = Utils.getLoginSuccess(aString);
-        if (successIsTrue) {
+    public void onPostExecute(LoginResponse loginResponse) {
+        String message = "Credentials invalid";
+        if (loginResponse.getSuccess()) {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
                     .setReorderingAllowed(true)
-                    .replace(R.id.fragment_container_view, new MenuFragment())
+                    .replace(R.id.fragment_container_view, new SportsFragment())
                     .commit();
-            message = "success";
+            message = "Nice to see you back!";
         }
         Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
         toast.show();
@@ -66,5 +64,5 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
 
 }
 interface LoginAsyncTaskCallback {
-    void onPostExecute(String aString);
+    void onPostExecute(LoginResponse loginResponse);
 }

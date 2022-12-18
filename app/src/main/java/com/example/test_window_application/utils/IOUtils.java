@@ -15,10 +15,9 @@ public class IOUtils {
         return response.toString();
     }
 
-    public static void writeStream(OutputStream out, String username, String password) {
-        String output = Utils.convertMapToJson(username,password);
+    public static void writeStream(OutputStream out, String requestContent) {
         try {
-            out.write(output.getBytes());
+            out.write(requestContent.getBytes());
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
