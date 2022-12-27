@@ -17,7 +17,7 @@ public class HTTPRequest {
             requestContent,
             urlParameter = "";
     HttpURLConnection client = null;
-    private LoginHeaders loginHeaders;
+    private LoginHeaders loginHeaders; // хранил бы сразу в client (см ниже), это частное а не общее
 
     private HTTPRequest(HTTPRequestBuilder builder) {
         this.urlLink = builder.urlLink;
@@ -27,25 +27,25 @@ public class HTTPRequest {
         this.loginHeaders = builder.loginHeaders;
     }
 
-    public String sendRequest() {                           // Не особо понимаю каким образом провести унифицирование - может
-        String response = null;                             // не понял что требуется. Как я понял, нужно сделать метод более generic,
-        try {                                               // чтобы собирать его как конструктор из конфигураций исходя из того,
-            URL url = new URL(urlLink.concat(urlParameter));// какой у нас http метод. Прикинул, возможно, паттерн Стратегия здесь сработал бы?
+    public String sendRequest() {                           // как вариант пердавть сюда client как параметр функции
+        String response = null;                             // что бы все что частное было на уровень выше (там где вызываем  request.sendRequest())
+        try {                                               // все что общее остается тут
+            URL url = new URL(urlLink.concat(urlParameter));
             client = (HttpURLConnection) url.openConnection();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        client.setRequestProperty("User-Agent", "Mozilla/5.0");
+        client.setRequestProperty("User-Agent", "Mozilla/5.0");  // это остается тут
 
         if (method == HTTPMethods.POST) {
-            client.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            client.setRequestProperty("Accept-Language", "en-US,en;q=0.5"); // это остается тут
             client.setDoOutput(true);
             if (loginHeaders != null) {
-                client.setRequestProperty("username", loginHeaders.getUsername());
-                client.setRequestProperty("password", loginHeaders.getPassword());
+                client.setRequestProperty("username", loginHeaders.getUsername()); // это задается в создании клиента на уровень выше (например в LoginRequestTask)
+                client.setRequestProperty("password", loginHeaders.getPassword()); // это задается в создании клиента на уровень выше (например в LoginRequestTask)
             }
             try {
-                client.setRequestMethod("POST");
+                client.setRequestMethod("POST");  // это остается тут
                 if (requestContent != null) {
                     OutputStream out = new BufferedOutputStream(client.getOutputStream());
                     IOUtils.writeStream(out,

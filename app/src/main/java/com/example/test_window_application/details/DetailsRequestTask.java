@@ -19,7 +19,7 @@ class DetailsRequestTask extends AsyncTask<Void, Void, DetailsResponse> {
     @Override
     protected DetailsResponse doInBackground(Void... voids) {
         HTTPRequest request = new HTTPRequest.HTTPRequestBuilder(UrlLinks.SPORT_DETAILS, HTTPMethods.GET)
-                .setUrlParameter(UrlParams.SPORT_ID + (id + 1))
+                .setUrlParameter(UrlParams.SPORT_ID + (id + 1)) //  от id + 1 избавляемся берем id из Sports response
                 .build();
         String response = request.sendRequest();
         return new DetailsResponse(response);

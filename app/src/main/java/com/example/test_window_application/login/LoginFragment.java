@@ -38,7 +38,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
     @Override
     public void onClick(View view) {
         LoginHeaders loginHeaders = new LoginHeaders(username.getText().toString(),
-                password.getText().toString());         // С новой логин ссылкой отправляю headers вместо json тела
+                password.getText().toString());
 
         loginTask = new LoginRequestTask(this,
                 loginHeaders);
@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Log
                     .setReorderingAllowed(true)
                     .replace(R.id.fragment_container_view, new SportsFragment())
                     .commit();
-            message = "Nice to see you back!";
+            message = "Nice to see you back!"; // берем из респонса loginResponse а не сами создаем строку
         }
         Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
         toast.show();

@@ -1,9 +1,9 @@
 package com.example.test_window_application.utils;
 
 public class Utils {
-    public static String getImageName(String sportName) {       // Решил оставить "mapper" здесь - нецелезообразно что-ли, если он будет
-        String result = null;                                   // в SportsResponse и потом протаскивать объект через методы фрагмента, чтобы только
-        switch (sportName) {                                    // вызвать один этот метод.
+    public static String getImageName(String sportName) {       // в данном случае да, тут ок. обычно картинки приходят ссылкой с сервера и потом в апке ты их грузишь
+        String result = null;
+        switch (sportName) {
             case "American Football":
                 result = "ic_baseline_sports_football_24";
                 break;

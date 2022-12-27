@@ -32,15 +32,15 @@ public class DetailsFragment extends Fragment implements RequestAsyncTaskCallbac
             }
         });
 
-        int id = requireArguments().getInt("position");
+        int id = requireArguments().getInt("position"); // id берем из SportsResponse а не из позиции
         detailsTask = new DetailsRequestTask((RequestAsyncTaskCallback) this, id);
         detailsTask.execute();
     }
 
     @Override
     public void onPostExecute(DetailsResponse detailsResponse) {
-        name = getView().findViewById(R.id.name);
-        address = getView().findViewById(R.id.address);
+        name = getView().findViewById(R.id.name);       // думаю есть смысл ставить референсы в  public void onCreate. (как сделано в LoginFragment)
+        address = getView().findViewById(R.id.address); // Смысл: что бы у тебя из любой функции был к ним доступ, и они не были пустыми
         phone = getView().findViewById(R.id.phone);
         price = getView().findViewById(R.id.price);
 
